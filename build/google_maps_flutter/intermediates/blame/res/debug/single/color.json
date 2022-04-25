@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/google_maps_flutter/intermediates/res/merged/debug/color/common_google_signin_btn_tint.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/res/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/google_maps_flutter/intermediates/res/merged/debug/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/google_maps_flutter/intermediates/res/merged/debug/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/res/color/common_google_signin_btn_text_dark.xml"
+    }
+]
