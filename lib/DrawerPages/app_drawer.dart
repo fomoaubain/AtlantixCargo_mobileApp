@@ -1,14 +1,20 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qcabs_driver/Assets/assets.dart';
 import 'package:qcabs_driver/Locale/strings_enum.dart';
 import 'package:qcabs_driver/Routes/page_routes.dart';
 import 'package:qcabs_driver/Theme/style.dart';
 import 'package:qcabs_driver/Locale/locale.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+import '../Constante.dart';
 
 class AppDrawer extends StatefulWidget {
   final bool fromHome;
@@ -20,6 +26,54 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+
+  late String token;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadSession();
+  }
+
+  Future<void> loadSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    token= prefs.getString('token').toString();
+  }
+
+  Future<void> clearSession() async {
+    final prefs = await SharedPreferences.getInstance();
+     prefs.clear();
+  }
+
+  Future closeSession() async {
+    var urlApi= Constante.serveurAdress+"vehicule/closeVehicleSession";
+    var vehicleIdentifier=5;
+    Map jsonBody = {'vehicleIdentifier': "$vehicleIdentifier" };
+    String body = json.encode(jsonBody);
+    http.Response response = await http.post(
+      Uri.parse(urlApi),
+      headers: {
+        'Accept': '*/*',
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $token'
+      },
+      body: body,
+    );
+
+    print("statuscode : " + response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      clearSession();
+      EasyLoading.dismiss();
+      Navigator.pushReplacementNamed(context, PageRoutes.loginPage);
+    }else{
+      EasyLoading.dismiss();
+      EasyLoading.showInfo("Impossible de se connecter au serveur.", duration: Duration(seconds: 4), dismissOnTap: true);
+
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +107,7 @@ class _AppDrawerState extends State<AppDrawer> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Thomas Meunier',
+                                Text('Véhicule 6',
                                     style: theme.textTheme.headline6),
                                 SizedBox(height: 6),
                                 Text('+1 (866) 813-1234',
@@ -128,13 +182,6 @@ class _AppDrawerState extends State<AppDrawer> {
                         Navigator.pushReplacementNamed(
                             context, PageRoutes.settingsPage);
                     }),
-               /* buildListTile(
-                    context, Icons.help, context.getString(Strings.FAQS)!, () {
-                  if (widget.fromHome)
-                    Navigator.popAndPushNamed(context, PageRoutes.faqPage);
-                  else
-                    Navigator.pushReplacementNamed(context, PageRoutes.faqPage);
-                }),*/
                 buildListTile(
                     context, Icons.mail, context.getString(Strings.CONTACT_US)!,
                         () {
@@ -145,7 +192,11 @@ class _AppDrawerState extends State<AppDrawer> {
                         Navigator.pushReplacementNamed(
                             context, PageRoutes.contactUsPage);
                     }),
-
+                 buildListTile(
+                    context, Icons.lock_open_rounded, "Se deconnecter", () {
+                   EasyLoading.show( status: "Deconnexion en cours...", dismissOnTap: false);
+                   closeSession();
+                 }),
               ],
             ),
             beginOffset: Offset(0, 0.3),

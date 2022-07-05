@@ -1,0 +1,312 @@
+[
+  {
+    "runKey": {
+      "scheduleIdentifier": "20220525",
+      "runIdentifier": "E4T0004"
+    },
+    "comment": "",
+    "estimatedCost": 16.12,
+    "vehicleClass": null,
+    "currentAssignment": null,
+    "activities": [
+      {
+        "activityNo": 47582973,
+        "activityType": 3,
+        "arrivalTime": "1500",
+        "departureTime": "1501",
+        "earliestArrivalTime": "1445",
+        "latestArrivalTime": "1515",
+        "location": {
+          "civicNumber": "2515",
+          "suite": "",
+          "building": "",
+          "municipalityName": "Boisbriand",
+          "municipalityIdentifier": "20",
+          "streetName": "de la Renaissance",
+          "streetOrientationCode": "",
+          "streetOrientationName": "",
+          "streetTypeCode": "AV",
+          "streetTypeName": "AVENUE",
+          "territory": "20",
+          "intersection": "Lionel-Bertrand",
+          "longitude": -73.85498,
+          "latitude": 45.61057,
+          "landmark": {
+            "identifier": "DRAGON",
+            "description": "ENTREPRISE IMPORT DRAGON",
+            "typeCode": "FLORES",
+            "typeName": "ATELIERS DU FLORES",
+            "operationalNote": ""
+          },
+          "postalCode": "J7H 1T9"
+        },
+        "tripInfo": {
+          "tripIdentifier": "165-B",
+          "customerIdentifier": 119,
+          "customerTitle": 0,
+          "firstName": "Prenom C119",
+          "lastName": "Nom C119",
+          "seatedInFront": false,
+          "caretakerRequirement": 1,
+          "characteristics": [],
+          "deficience": "INTELLEC",
+          "requestedTimeType": 0,
+          "assistiveDevices": [],
+          "numberOfAmbulantCustomers": 1,
+          "numberOfWCCustomers": 0,
+          "numberOfAmbulantCompanions": 0,
+          "numberOfWCCompanions": 0,
+          "passengers": [
+            {
+              "passengerType": 0,
+              "paymentModes": [
+                "BILLET",
+                "5.25",
+                "GRATUIT",
+                "L-P",
+                "N/C",
+                "NON PAYÉ",
+                "TRAM 5"
+              ],
+              "cardNumber": null
+            }
+          ],
+          "comment": "",
+          "mustConfirmArrival": true,
+          "groupOperationalNote": null,
+          "attendantRequired": false
+        },
+        "prevRunActivityNo": null,
+        "nextRunActivityNo": 47582974,
+        "modifTypes": []
+      },
+      {
+        "activityNo": 47582974,
+        "activityType": 4,
+        "arrivalTime": "1513",
+        "departureTime": "1515",
+        "earliestArrivalTime": "1455",
+        "latestArrivalTime": "1555",
+        "location": {
+          "civicNumber": "123",
+          "suite": "",
+          "building": "",
+          "municipalityName": "Saint-Eustache",
+          "municipalityIdentifier": "15",
+          "streetName": "Fontaine",
+          "streetOrientationCode": "",
+          "streetOrientationName": "",
+          "streetTypeCode": "RUE",
+          "streetTypeName": "RUE",
+          "territory": "15",
+          "intersection": "33e Avenue",
+          "longitude": -73.86594,
+          "latitude": 45.57519,
+          "landmark": null,
+          "postalCode": "J7P 1N3"
+        },
+        "tripInfo": {
+          "tripIdentifier": "165-B",
+          "customerIdentifier": 119,
+          "customerTitle": 0,
+          "firstName": "Prenom C119",
+          "lastName": "Nom C119",
+          "seatedInFront": false,
+          "caretakerRequirement": 0,
+          "characteristics": [],
+          "deficience": "INTELLEC",
+          "requestedTimeType": 0,
+          "assistiveDevices": [],
+          "numberOfAmbulantCustomers": 1,
+          "numberOfWCCustomers": 0,
+          "numberOfAmbulantCompanions": 0,
+          "numberOfWCCompanions": 0,
+          "passengers": [
+            {
+              "passengerType": 0,
+              "paymentModes": [
+                "BILLET",
+                "5.25",
+                "GRATUIT",
+                "L-P",
+                "N/C",
+                "NON PAYÉ",
+                "TRAM 5"
+              ],
+              "cardNumber": null
+            }
+          ],
+          "comment": "",
+          "mustConfirmArrival": false,
+          "groupOperationalNote": null,
+          "attendantRequired": false
+        },
+        "prevRunActivityNo": 47582973,
+        "nextRunActivityNo": null,
+        "modifTypes": []
+      }
+    ]
+  },
+  {
+    "runKey": {
+      "scheduleIdentifier": "20220525",
+      "runIdentifier": "E4V0004"
+    },
+    "comment": "",
+    "estimatedCost": 29,
+    "vehicleClass": null,
+    "currentAssignment": null,
+    "activities": [
+      {
+        "activityNo": 47585173,
+        "activityType": 3,
+        "arrivalTime": "1230",
+        "departureTime": "1231",
+        "earliestArrivalTime": "1215",
+        "latestArrivalTime": "1245",
+        "location": {
+          "civicNumber": "2705",
+          "suite": "",
+          "building": "",
+          "municipalityName": "Deux-Montagnes",
+          "municipalityIdentifier": "25",
+          "streetName": "des Promenades",
+          "streetOrientationCode": "",
+          "streetOrientationName": "",
+          "streetTypeCode": "BOUL",
+          "streetTypeName": "BOULEVARD",
+          "territory": "25",
+          "intersection": "des Promenades",
+          "longitude": -73.92205,
+          "latitude": 45.54095,
+          "landmark": {
+            "identifier": "CFCP",
+            "description": "CFCP",
+            "typeCode": "ECOLE",
+            "typeName": "ETABLISSEMENT D'ENSEIGNEMENT",
+            "operationalNote": ""
+          },
+          "postalCode": "J7R 0A6"
+        },
+        "tripInfo": {
+          "tripIdentifier": "52-B",
+          "customerIdentifier": 3002,
+          "customerTitle": 1,
+          "firstName": "Prenom C3002",
+          "lastName": "Nom C3002",
+          "seatedInFront": false,
+          "caretakerRequirement": 1,
+          "characteristics": [],
+          "deficience": "INTELLEC",
+          "requestedTimeType": 0,
+          "assistiveDevices": [
+            {
+              "identifier": "CANNE",
+              "description": "CANNE",
+              "totalNumber": 1,
+              "numberForCustomer": 1
+            }
+          ],
+          "numberOfAmbulantCustomers": 1,
+          "numberOfWCCustomers": 0,
+          "numberOfAmbulantCompanions": 0,
+          "numberOfWCCompanions": 0,
+          "passengers": [
+            {
+              "passengerType": 0,
+              "paymentModes": [
+                "BILLET",
+                "5.25",
+                "GRATUIT",
+                "L-P",
+                "N/C",
+                "NON PAYÉ",
+                "TRAM 5"
+              ],
+              "cardNumber": null
+            }
+          ],
+          "comment": "",
+          "mustConfirmArrival": true,
+          "groupOperationalNote": null,
+          "attendantRequired": false
+        },
+        "prevRunActivityNo": null,
+        "nextRunActivityNo": 47585174,
+        "modifTypes": []
+      },
+      {
+        "activityNo": 47585174,
+        "activityType": 4,
+        "arrivalTime": "1256",
+        "departureTime": "1258",
+        "earliestArrivalTime": "1240",
+        "latestArrivalTime": "1355",
+        "location": {
+          "civicNumber": "9095",
+          "suite": "2",
+          "building": "",
+          "municipalityName": "MIRABEL",
+          "municipalityIdentifier": "80",
+          "streetName": "Dumouchel",
+          "streetOrientationCode": "",
+          "streetOrientationName": "",
+          "streetTypeCode": "RUE",
+          "streetTypeName": "RUE",
+          "territory": "MIRABEL",
+          "intersection": "Saint-Jean-Baptiste",
+          "longitude": -74.09812,
+          "latitude": 45.566025,
+          "landmark": null,
+          "postalCode": "J7N 2S2"
+        },
+        "tripInfo": {
+          "tripIdentifier": "52-B",
+          "customerIdentifier": 3002,
+          "customerTitle": 1,
+          "firstName": "Prenom C3002",
+          "lastName": "Nom C3002",
+          "seatedInFront": false,
+          "caretakerRequirement": 0,
+          "characteristics": [],
+          "deficience": "INTELLEC",
+          "requestedTimeType": 0,
+          "assistiveDevices": [
+            {
+              "identifier": "CANNE",
+              "description": "CANNE",
+              "totalNumber": 1,
+              "numberForCustomer": 1
+            }
+          ],
+          "numberOfAmbulantCustomers": 1,
+          "numberOfWCCustomers": 0,
+          "numberOfAmbulantCompanions": 0,
+          "numberOfWCCompanions": 0,
+          "passengers": [
+            {
+              "passengerType": 0,
+              "paymentModes": [
+                "BILLET",
+                "5.25",
+                "GRATUIT",
+                "L-P",
+                "N/C",
+                "NON PAYÉ",
+                "TRAM 5"
+              ],
+              "cardNumber": null
+            }
+          ],
+          "comment": "",
+          "mustConfirmArrival": false,
+          "groupOperationalNote": null,
+          "attendantRequired": false
+        },
+        "prevRunActivityNo": 47585173,
+        "nextRunActivityNo": null,
+        "modifTypes": []
+      }
+    ]
+  }
+]

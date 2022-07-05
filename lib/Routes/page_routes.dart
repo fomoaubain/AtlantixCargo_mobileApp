@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qcabs_driver/Auth/Login/UI/login_page.dart';
 import 'package:qcabs_driver/BookRide/StepperPage.dart';
 import 'package:qcabs_driver/BookRide/begin_ride.dart';
 import 'package:qcabs_driver/BookRide/ride_booked_page.dart';
@@ -37,6 +38,7 @@ class PageRoutes {
   static const String historiquePage = 'historique_page';
   static const String notificationPage = 'notification_page';
   static const String detailsPage = 'details_page';
+  static const String loginPage = 'login_page';
 
   Map<String, WidgetBuilder> routes() {
     return {
@@ -54,10 +56,11 @@ class PageRoutes {
       contactUsPage: (context) => ContactUsPage(),
       faqPage: (context) => FaqPage(),
       settingsPage: (context) => SettingsPage(),
-      stepperPage: (context) => StepperPage(),
+     // stepperPage: (context) => StepperPage(null),
       historiquePage: (context) => HistoriquePage(),
       notificationPage: (context) => NotificationPage(),
       detailsPage: (context) => DetailsPage(),
+      loginPage: (context) => LoginPage(),
     };
   }
 }

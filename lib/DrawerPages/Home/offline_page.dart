@@ -83,7 +83,7 @@ class _OfflinePageState extends State<OfflinePage> {
                      ),
 
                     /*Image.asset('assets/delivery_boy.png'),*/
-                    title: Text("Thomas Meunier"),
+                    title: Text("Véhicule 6"),
                     subtitle: GestureDetector(
                       onTap:() {
                         Navigator.pushNamed(context, PageRoutes.myRidesPage);

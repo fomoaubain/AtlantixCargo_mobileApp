@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/flutter_webview_plugin/intermediates/res/merged/debug/drawable-ldrtl-hdpi-v17/abc_ic_menu_cut_mtrl_alpha.png",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/25e083a2df492fb09111c95f6009a1ce/appcompat-1.1.0/res/drawable-ldrtl-hdpi-v17/abc_ic_menu_cut_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/flutter_webview_plugin/intermediates/res/merged/debug/drawable-ldrtl-hdpi-v17/abc_spinner_mtrl_am_alpha.9.png",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/25e083a2df492fb09111c95f6009a1ce/appcompat-1.1.0/res/drawable-ldrtl-hdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/flutter_webview_plugin/intermediates/res/merged/debug/drawable-ldrtl-hdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png",
+        "source": "/Users/mac/.gradle/caches/transforms-2/files-2.1/25e083a2df492fb09111c95f6009a1ce/appcompat-1.1.0/res/drawable-ldrtl-hdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png"
+    }
+]

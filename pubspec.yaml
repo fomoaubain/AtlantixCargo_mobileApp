@@ -38,6 +38,19 @@ dependencies:
   dropdown_button2: ^1.4.0
   rflutter_alert: ^2.0.4
   expandable: ^5.0.1
+  flutter_appauth: ^2.4.1
+  http: ^0.13.4
+  aad_oauth: ^0.3.0
+  flutter_easyloading: ^3.0.3
+  dio: ^4.0.6
+  geolocator: ^8.0.5
+  geolocator_android: 3.1.5
+  shimmer: ^2.0.0
+  toast: ^0.3.0
+  blinking_text: ^1.0.2
+  sqflite: ^2.0.2
+
+
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +64,6 @@ flutter_icons:
 
 flutter_launcher_name:
   name: "Atlantix cargo+"
-
 
 flutter:
 

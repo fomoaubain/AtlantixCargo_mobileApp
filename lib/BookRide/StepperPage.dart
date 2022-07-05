@@ -14,9 +14,16 @@ import 'package:qcabs_driver/Locale/locale.dart';
 import 'package:qcabs_driver/Locale/strings_enum.dart';
 import 'package:qcabs_driver/Routes/page_routes.dart';
 import 'package:qcabs_driver/Theme/style.dart';
+import 'package:qcabs_driver/model/Routes.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class StepperPage extends StatefulWidget {
+  late Routes routes;
+
+  StepperPage( Routes routes){
+    this.routes=routes;
+  }
+
   @override
   _StepperPage createState() => _StepperPage();
 }
@@ -62,7 +69,6 @@ class _StepperPage extends State<StepperPage> {
                 AssetImage("assets/destination.jpeg"),
                 AssetImage("assets/client_out.jpeg"),
                 AssetImage("assets/pret_go.png"),
-
               ],
               // activeStep property set to activeStep variable defined above.
               activeStep: activeStep,
@@ -602,7 +608,6 @@ class _StepperPage extends State<StepperPage> {
             Divider( color: Colors.transparent,),
             _customDropDownExample(context,Icons.messenger_outline,"Autres"),
             Divider( color: Colors.transparent,),
-
           ],
         ),
       ),

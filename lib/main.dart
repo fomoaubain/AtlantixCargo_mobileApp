@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:qcabs_driver/Splaschscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 import 'Auth/login_navigator.dart';
 import 'DrawerPages/Settings/language_cubit.dart';
 import 'DrawerPages/Settings/theme_cubit.dart';
@@ -27,6 +29,7 @@ class CabiraDriver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+    ToastContext().init(context);
     return BlocBuilder<LanguageCubit, Locale>(
       builder: (context, locale) {
         return BlocBuilder<ThemeCubit, ThemeData>(
@@ -48,6 +51,8 @@ class CabiraDriver extends StatelessWidget {
               home: Splaschscreen(),
               routes: PageRoutes().routes(),
               debugShowCheckedModeBanner: false,
+              builder: EasyLoading.init(),
+
             );
           },
         );

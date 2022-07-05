@@ -1,8 +1,14 @@
-#Tue Apr 19 15:32:45 WAT 2022
+#Tue Jul 05 00:37:04 WAT 2022
 path.4=classes_2.dex
 path.3=classes_1.dex
 path.2=classes_0.dex
+renamed.9=classes10.dex
 path.1=classes.dex
+renamed.8=classes9.dex
+path.8=classes_6.dex
+path.7=classes_5.dex
+path.6=classes_4.dex
+path.5=classes_3.dex
 path.0=classes.dex
 base.4=/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/app/intermediates/dex/debug/mergeLibDexDebug/out/classes_2.dex
 base.3=/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/app/intermediates/dex/debug/mergeLibDexDebug/out/classes_1.dex
@@ -13,4 +19,13 @@ renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
+base.9=/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/app/intermediates/dex/debug/mergeLibDexDebug/out/classes_7.dex
+path.9=classes_7.dex
+renamed.7=classes8.dex
+base.8=/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/app/intermediates/dex/debug/mergeLibDexDebug/out/classes_6.dex
+renamed.6=classes7.dex
+base.7=/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/app/intermediates/dex/debug/mergeLibDexDebug/out/classes_5.dex
+renamed.5=classes6.dex
+base.6=/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/app/intermediates/dex/debug/mergeLibDexDebug/out/classes_4.dex
 renamed.4=classes5.dex
+base.5=/Users/mac/Documents/Projet flutter/Atlantix_cargo/build/app/intermediates/dex/debug/mergeLibDexDebug/out/classes_3.dex

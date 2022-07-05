@@ -136,8 +136,8 @@ Map<Strings, String> french() {
     Strings.RECENT_RATINGS: 'évaluations récentes',
     Strings.SAFE_AND_FUNNY_DRIVER:
         'Sûr et drôle conducteur. Je vais sûrement lui préférer mon trajet en taxi.',
-    Strings.MY_RIDES: 'Les transports de la journée',
-    Strings.LIST_OF_RIDES_COMPLETED: 'Liste des transports de la journée',
+    Strings.MY_RIDES: 'Les tournées de la journée',
+    Strings.LIST_OF_RIDES_COMPLETED: 'Liste des tournée de la journée',
     Strings.PAID_VIA_WALLET: 'Payé via Wallet',
     Strings.PRIVATE: 'Privé',
     Strings.RECEIVED_FOR_RIDE: 'Reçu pour le tour',
