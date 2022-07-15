@@ -31,12 +31,18 @@ class SqliteService {
     final db = await initializeDB();
     final List<Map<String, Object?>> queryResult =
     await db.query('Tourne', where:"idTourne = ? ", whereArgs: [idTourne]  );
-    return queryResult.map((e) => Tourne.fromMap(e)).toList().first;
+   List<Tourne> result =  queryResult.map((e) => Tourne.fromMap(e)).toList();
+   if(result.length>0){
+     return result.first;
+   }else{
+     return null;
+   }
+
   }
 
-   Future<void> updateItems( var idTourne, var val) async {
+   Future<int> updateItems( var idTourne, var status) async {
     final db = await initializeDB();
-    await db.update('Tourne', {'status': val}, where: "idTourne = ? ", whereArgs: [idTourne]);
+   return await db.update('Tourne', {'status': status}, where: "idTourne = ? ", whereArgs: [idTourne]);
   }
 
 

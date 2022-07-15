@@ -37,7 +37,7 @@ class _Splaschscreen extends  State<Splaschscreen>{
         children: <Widget>[
           Image.asset('assets/app_splash.png', height: 70.0, width: (width/2)+(width/6)),
           SizedBox(height: 10.0,),
-          SpinKitRipple(
+          SpinKitChasingDots(
             size: 20,
             color: Colors.blue.shade800,
           ),

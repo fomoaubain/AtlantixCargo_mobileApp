@@ -14,6 +14,7 @@ import 'package:qcabs_driver/Components/custom_button.dart';
 import 'package:qcabs_driver/Components/entry_field.dart';
 import 'package:qcabs_driver/Locale/strings_enum.dart';
 import 'package:qcabs_driver/Routes/page_routes.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import '../../../Constante.dart';
@@ -33,16 +34,18 @@ class LoginUI extends StatefulWidget {
 
 
 class _LoginUIState extends State<LoginUI> {
-
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _login =
   TextEditingController(text: '');
   final TextEditingController _password =
   TextEditingController(text: '');
 
-  late bool showbutton= true;
+  late bool showbutton= false;
 
   String isoCode = '';
   late Position? position=null;
+
+   var numeroVehicule="" ;
 
   static final Config config = Config(
     tenant: Constante.tenant,
@@ -54,22 +57,26 @@ class _LoginUIState extends State<LoginUI> {
   );
   final AadOAuth oauth = AadOAuth(config);
 
+
   @override
   void initState() {
     super.initState();
-    Constante.gpsPermission();
+    Future.delayed(Duration(seconds: 1), () {
+      verifiedParam();
+    });
+  //  Constante.gpsPermission();
   }
 
 
   Future openSession(String token) async {
 
    var urlApi= Constante.serveurAdress+"vehicule/openVehicleSession";
-   var vehicleIdentifier=6;
-    Map jsonBody = {'vehicleIdentifier': "$vehicleIdentifier",
+   String date =  Constante.getDateForAPI(DateTime.now());
+    Map jsonBody = {'vehicleIdentifier': "$numeroVehicule",
                     'gpsPosition':{
                       "longitude": position!=null ?position!.longitude : 0,
                       "latitude":position!=null ? position!.latitude : 0,
-                     // "date": "",
+                     // "date": "2022",
                       "time": position!=null ? DateFormat.Hm().format(position!.timestamp!) :"",
                       "speed": position!=null ? position!.speed :0
                     }
@@ -88,6 +95,7 @@ class _LoginUIState extends State<LoginUI> {
     //print("response body : " + response.body.toString());
     if (response.statusCode == 200) {
       EasyLoading.dismiss();
+      saveNumeroVehicule();
       Navigator.pushReplacementNamed(context, PageRoutes.offlinePage);
     }else{
       EasyLoading.dismiss();
@@ -102,6 +110,99 @@ class _LoginUIState extends State<LoginUI> {
         showbutton=true;
       });
     }
+  }
+
+
+  Future verifiedParam() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(!prefs.containsKey(Constante.key_numero_vehicule)){
+      showPopup();
+    }else{
+      getNumeroVehicule();
+      setState(() {
+        showbutton=true;
+      });
+    }
+  }
+
+   showPopup() {
+    return  Alert(
+      onWillPopActive: true,
+      useRootNavigator: false,
+      closeIcon: SizedBox(),
+      context: context,
+      type: AlertType.none,
+      title: "Entrer le numéro de votre véhicule.",
+      content:Form(
+        key: formKey,
+        child:  Column(
+          children: <Widget>[
+            SizedBox(height: 10,),
+            TextFormField(
+              minLines: 1, // <-- SEE HERE
+              maxLines: 1,
+              obscureText: false,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Saisir ici',
+                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black26)
+                ),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black26)
+                ),
+              ),
+              validator: (String ? value){
+                if(value!.isEmpty){
+                  return "Ce champ est obligatoire";
+                }
+                if(value.toString().length>4){
+                  return "Ce numéro n'est pas valide";
+                }
+                numeroVehicule = value;
+                return null;
+              },
+            ),
+
+          ],
+        ),
+      ),
+
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Sauvegarder",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: (){
+            if(formKey.currentState!.validate()){
+              print("numero vehicule : "+ numeroVehicule);
+              setState(() {
+                showbutton= true;
+              });
+             Navigator.pop(context);
+            }
+          },
+          gradient: LinearGradient(colors: [
+            Colors.blue.shade800,
+            Colors.blue.shade800
+          ]),
+        )
+      ],
+    ).show();
+  }
+
+  void saveNumeroVehicule() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(Constante.key_numero_vehicule, numeroVehicule);
+    Constante.numeroVehicule= numeroVehicule;
+  }
+
+  void getNumeroVehicule() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+     numeroVehicule = (await prefs.getString(Constante.key_numero_vehicule))!;
+     Constante.numeroVehicule= numeroVehicule;
   }
 
 
@@ -230,6 +331,7 @@ class _LoginUIState extends State<LoginUI> {
 
   void login() async {
     try {
+    await  Constante.gpsPermission();
 
       position=await Constante.determinePosition();
       await oauth.login();

@@ -4,11 +4,14 @@ import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:qcabs_driver/DrawerPages/Home/offline_page.dart';
 import 'package:qcabs_driver/model/Routes.dart';
 import 'package:qcabs_driver/model/dto/client.dart';
 import 'package:qcabs_driver/model/dto/tourne.dart';
+import 'package:qcabs_driver/service/service_db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import '../../Constante.dart';
@@ -31,7 +34,7 @@ class BilanRidesPage extends StatefulWidget {
 }
 
 class _BilanRidesPage extends  State<BilanRidesPage>  {
-
+  late SqliteService _sqliteService;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late List<Customer> objClient=[],  initListClient=[];
   late Future<List<Customer>>  listClient;
@@ -39,6 +42,7 @@ class _BilanRidesPage extends  State<BilanRidesPage>  {
   var token;
    TextEditingController _textcontroller = new  TextEditingController();
    var comment="";
+  late Position position;
 
   Future<List<Customer>> fetchItem() async {
     final prefs = await SharedPreferences.getInstance();
@@ -51,22 +55,31 @@ class _BilanRidesPage extends  State<BilanRidesPage>  {
   Future saveRunCommentAndRun(var runId, var scheduleId, String comment ) async{
     final prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
-    DateTime date = DateTime.now();
+
+    var date = Constante.getDateForAPI(DateTime.now());
+    var hour= DateTime.now().hour;
+    var minute= DateTime.now().minute;
+    var desc= comment.length==0 ? "Aucun commentaire laisser" : comment;
 
     var urlApi= Constante.serveurAdress+"vehicule/run/schedule/$scheduleId/run/$runId/comment";
     Map jsonBody = {
       "code": "CM_TOU",
-      "desc": "$comment",
-      "date": "2022-06-30T15:22:49.201Z"
+      "desc": "$desc",
+      "date": "$date"
     };
     String body = json.encode(jsonBody);
 
     var urlApi2= Constante.serveurAdress+"vehicule/assignmentEvent/schedule/$scheduleId/run/$runId";
     Map jsonBody2 = {
       "starting": true,
-      "time": "10",
-      "odometer": 0,
-      "date": "2022-06-30T15:22:49.201Z"
+      "time": "$hour$minute",
+      "date": "$date",
+      'gpsPosition':{
+        "longitude": position!=null ?position.longitude : 0,
+        "latitude":position!=null ? position.latitude : 0,
+        "time": position!=null ? DateFormat.Hm().format(position.timestamp!) :"",
+        "speed": position!=null ? position.speed :0
+      }
     };
     String body2 = json.encode(jsonBody2);
 
@@ -98,6 +111,8 @@ class _BilanRidesPage extends  State<BilanRidesPage>  {
   @override
   void initState() {
     super.initState();
+    this._sqliteService= SqliteService();
+    this._sqliteService.initializeDB();
     listClient= this.fetchItem();
 
   }
@@ -291,35 +306,48 @@ class _BilanRidesPage extends  State<BilanRidesPage>  {
                       Navigator.pop(context);
                       print("comment : "+comment);
                       EasyLoading.show(status: 'Veuillez patienter...');
-                      await saveRunCommentAndRun(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, comment).then((value){
+
+                      try{
+                        position=(await Constante.determinePosition())!;
+                        await saveRunCommentAndRun(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, comment).then((value) async {
+                          EasyLoading.dismiss();
+                          print(value.statusCode.toString());
+                          print(value.toString());
+                          if(value.statusCode == 200){
+                            await  _sqliteService.updateItems(widget.idTourne, 2).then((value){
+                              print("update :" + value.toString());
+                            });
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OfflinePage()
+                                ),
+                                ModalRoute.withName("/offline_page")
+                            );
+
+                          }else{
+                            // print(value.body.toString());
+                            //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActivitiesStepper(widget.listActivities.toList(), widget.idTourne)));
+                            Toast?.show("Impossible de se connecter au serveur veuillez réessayer",
+                              duration: Toast.lengthLong,
+                              gravity: Toast.bottom,
+                              backgroundColor: Colors.black,
+                              textStyle:TextStyle(color: Colors.white),
+                            );
+
+                          }
+                        });
+                      }catch(e){
                         EasyLoading.dismiss();
-                        print(value.statusCode.toString());
-                        print(value.toString());
-                        if(value.statusCode == 200){
-                          Tourne tourne= Constante.listTourne.firstWhere((p) => p.idTourne == widget.idTourne);
-                          var index= Constante.listTourne.indexWhere((p) => p.idTourne == widget.idTourne);
-                          tourne.status = 2;
-                          Constante.listTourne[index]= tourne;
-                          Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OfflinePage()
-                        ),
-                        ModalRoute.withName("/offline_page")
+                        Toast?.show("Erreur de connexion au serveur veuillez réessayer.",
+                          duration: Toast.lengthLong,
+                          gravity: Toast.bottom,
+                          backgroundColor: Colors.black,
+                          textStyle:TextStyle(color: Colors.white),
                         );
 
-                        }else{
-                          // print(value.body.toString());
-                          //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActivitiesStepper(widget.listActivities.toList(), widget.idTourne)));
-                          Toast?.show("Impossible de se connecter au serveur veuillez réessayer",
-                            duration: Toast.lengthLong,
-                            gravity: Toast.bottom,
-                            backgroundColor: Colors.black,
-                            textStyle:TextStyle(color: Colors.white),
-                          );
+                      }
 
-                        }
-                      });
 
                     }
 

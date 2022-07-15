@@ -20,37 +20,37 @@
 16    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 16-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:11:5-79
 16-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:11:22-76
-17    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+17    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Include required permissions for Google Maps API to run. -->
 17-->[:geolocator_android] /Users/mac/Documents/Projet flutter/Atlantix_cargo/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-77
 17-->[:geolocator_android] /Users/mac/Documents/Projet flutter/Atlantix_cargo/build/geolocator_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-74
-18
-19    <queries>
-19-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:24:5-32:15
-20        <intent>
-20-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:25:9-31:18
-21            <action android:name="android.intent.action.VIEW" />
-21-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:13-65
-21-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:21-62
-22
-23            <category android:name="android.intent.category.BROWSABLE" />
-23-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:13-74
-23-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:23-71
-24
-25            <data android:scheme="https" />
-25-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:13-44
-25-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:19-41
-26        </intent>
-27    </queries> <!-- Include required permissions for Google Maps API to run. -->
-28    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-28-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
-28-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:23:22-76
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
+18-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:23:22-76
+19
+20    <uses-feature
+20-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+21        android:glEsVersion="0x00020000"
+21-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+22        android:required="true" />
+22-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+23
+24    <queries>
+24-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:24:5-32:15
+25        <intent>
+25-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:25:9-31:18
+26            <action android:name="android.intent.action.VIEW" />
+26-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:13-65
+26-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:21-62
+27
+28            <category android:name="android.intent.category.BROWSABLE" />
+28-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:13-74
+28-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:23-71
 29
-30    <uses-feature
-30-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
-31        android:glEsVersion="0x00020000"
-31-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
-32        android:required="true" />
-32-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+30            <data android:scheme="https" />
+30-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:13-44
+30-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:19-41
+31        </intent>
+32    </queries>
 33
 34    <application
 34-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:12:5-60:19
@@ -172,64 +172,64 @@
 105-->[:flutter_webview_plugin] /Users/mac/Documents/Projet flutter/Atlantix_cargo/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:16:17-67
 106                android:resource="@xml/filepaths" />
 106-->[:flutter_webview_plugin] /Users/mac/Documents/Projet flutter/Atlantix_cargo/build/flutter_webview_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-50
-107        </provider>
-108
-109        <activity
-109-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:35:9-39:77
-110            android:name="net.openid.appauth.AuthorizationManagementActivity"
-110-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:36:13-78
-111            android:exported="false"
-111-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:37:13-37
-112            android:launchMode="singleTask"
-112-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:38:13-44
-113            android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar" />
-113-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:39:13-74
-114        <activity
-114-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:40:9-51:20
-115            android:name="net.openid.appauth.RedirectUriReceiverActivity"
-115-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:41:13-74
-116            android:exported="true" >
-116-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:42:13-36
-117            <intent-filter>
-117-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:43:13-50:29
-118                <action android:name="android.intent.action.VIEW" />
-118-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:13-65
-118-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:21-62
-119
-120                <category android:name="android.intent.category.DEFAULT" />
-120-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:44:13-72
-120-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:44:23-69
-121                <category android:name="android.intent.category.BROWSABLE" />
-121-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:13-74
-121-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:23-71
-122
-123                <data android:scheme="com.flutter.cabira-driver" />
-123-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:13-44
-123-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:19-41
-124            </intent-filter>
-125        </activity> <!-- Needs to be explicitly declared on P+ -->
-126        <uses-library
-126-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
-127            android:name="org.apache.http.legacy"
-127-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
-128            android:required="false" />
-128-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
-129
-130        <activity
-130-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
-131            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-131-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
-132            android:exported="false"
-132-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
-133            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-133-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+107        </provider> <!-- Needs to be explicitly declared on P+ -->
+108        <uses-library
+108-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+109            android:name="org.apache.http.legacy"
+109-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+110            android:required="false" />
+110-->[com.google.android.gms:play-services-maps:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/b3583d29b502ec80aa22db44a77706bf/play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+111
+112        <activity
+112-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+113            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+113-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+114            android:exported="false"
+114-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+115            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+115-->[com.google.android.gms:play-services-base:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/e50709421e2bb30f0b9d3ecd20e28aa7/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+116
+117        <meta-data
+117-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/7748332601f02b86e04df29a7cbe3e57/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+118            android:name="com.google.android.gms.version"
+118-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/7748332601f02b86e04df29a7cbe3e57/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+119            android:value="@integer/google_play_services_version" />
+119-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/7748332601f02b86e04df29a7cbe3e57/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+120
+121        <activity
+121-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:35:9-39:77
+122            android:name="net.openid.appauth.AuthorizationManagementActivity"
+122-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:36:13-78
+123            android:exported="false"
+123-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:37:13-37
+124            android:launchMode="singleTask"
+124-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:38:13-44
+125            android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar" />
+125-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:39:13-74
+126        <activity
+126-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:40:9-51:20
+127            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+127-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:41:13-74
+128            android:exported="true" >
+128-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:42:13-36
+129            <intent-filter>
+129-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:43:13-50:29
+130                <action android:name="android.intent.action.VIEW" />
+130-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:13-65
+130-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:43:21-62
+131
+132                <category android:name="android.intent.category.DEFAULT" />
+132-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:44:13-72
+132-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:44:23-69
+133                <category android:name="android.intent.category.BROWSABLE" />
+133-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:13-74
+133-->/Users/mac/Documents/Projet flutter/Atlantix_cargo/android/app/src/main/AndroidManifest.xml:45:23-71
 134
-135        <meta-data
-135-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/7748332601f02b86e04df29a7cbe3e57/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
-136            android:name="com.google.android.gms.version"
-136-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/7748332601f02b86e04df29a7cbe3e57/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
-137            android:value="@integer/google_play_services_version" />
-137-->[com.google.android.gms:play-services-basement:17.0.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/7748332601f02b86e04df29a7cbe3e57/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+135                <data android:scheme="com.flutter.cabira-driver" />
+135-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:13-44
+135-->[net.openid:appauth:0.10.0] /Users/mac/.gradle/caches/transforms-2/files-2.1/49059af1a413b33090cafee2c81e5f9c/appauth-0.10.0/AndroidManifest.xml:30:19-41
+136            </intent-filter>
+137        </activity>
 138    </application>
 139
 140</manifest>

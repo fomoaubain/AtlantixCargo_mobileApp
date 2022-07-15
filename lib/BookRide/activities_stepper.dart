@@ -10,9 +10,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:qcabs_driver/BookRide/bilan_ride_page.dart';
+import 'package:qcabs_driver/BookRide/map_page.dart';
 import 'package:qcabs_driver/DrawerPages/PromoCode/promo_code_page.dart';
 import 'package:qcabs_driver/Routes/page_routes.dart';
 import 'package:qcabs_driver/model/Routes.dart';
@@ -21,6 +24,7 @@ import 'package:qcabs_driver/model/dto/client.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+import 'package:collection/collection.dart';
 
 import '../Constante.dart';
 import 'package:http/http.dart' as http;
@@ -53,6 +57,7 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
    List<int> number = [];
   List<Etape> listEtape = [];
   late  Etape currentEtape = new Etape(id: null, action: null, finish: null);
+   late Position position;
 
  late Activities  activeActivitiesObject;
 
@@ -68,12 +73,12 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
   Future runActivityComment(var runId, var scheduleId, var activityNo, var code, var desc) async{
     final prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
-
+    var date = Constante.getDateForAPI(DateTime.now());
     var urlApi= Constante.serveurAdress+"vehicule/run/schedule/$scheduleId/run/$runId/activity/$activityNo/comment";
     Map jsonBody = {
       "code": "$code",
       "desc": "$desc",
-      "date": "2022-06-30T15:22:49.201Z"
+      "date": "$date"
     };
     String body = json.encode(jsonBody);
     http.Response response = await http.post(
@@ -90,7 +95,7 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
 
   }
 
-  Future runActivityEvent(var runId, var scheduleId, var activityNo, String? paymentMode) async{
+  Future runActivityEvent(var runId, var scheduleId, var activityNo, Map jsonBody) async{
     final prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
 
@@ -98,7 +103,7 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
    var arrivalTime = activeActivitiesObject.arrivalTime;
     var departureTime = activeActivitiesObject.departureTime;
 
-    Map jsonBody = {
+   /* Map jsonBody = {
       "arrivalTime": "$arrivalTime",
       "departureTime": "$departureTime",
       "passengers": [
@@ -111,7 +116,7 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
       "nbEscorts": 0,
       "confirmArrival": true,
       "date": "2022-07-04T13:11:52.132Z"
-    };
+    };*/
     String body = json.encode(jsonBody);
     http.Response response = await http.post(
       Uri.parse(urlApi),
@@ -202,7 +207,7 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
                     activeStepColor: Colors.blue.shade900,
                     numbers: number,
                     direction: Axis.horizontal,
-                    enableStepTapping: true,
+                    enableStepTapping: false,
                     stepPadding: 15,
                     stepRadius: 4,
                     activeStep: activeStep,
@@ -249,7 +254,12 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
                     },
                   ),
 
-                  buildCard(setIcon(Icons.location_on, Colors.red.shade400),"Géolocaliser ma destination",),
+                  buildCard(setIcon(Icons.location_on, Colors.red.shade400),"Géolocaliser ma destination",
+                      () async {
+                        position=(await Constante.determinePosition())!;
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MapPage( new LatLng(activeActivitiesObject.location.latitude, activeActivitiesObject.location.longitude), new LatLng(position.latitude, position.longitude) )));
+                      }
+                  ),
                 ],
               ),
             ),
@@ -581,14 +591,50 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
     return     buildCard( currentEtape.action==1 ?
     setImage("assets/client_in.jpeg", 30, 30) :
     setIcon(Icons.electric_car_rounded, Colors.green.shade400),
-        currentEtape.action==1 ? "Embarquer \n le client" : "Commencer \n la course",
+        currentEtape.action==1 ? "Embarquement \n éffectué" : "Arrivé  \n  embarquement",
             (){
               if(currentEtape.action==0){
-                Constante.alertPopup(context, "Etes-vous sur le chemin pour l'embarquement du client ?", (){
+                Constante.alertPopup(context, "Confirmez-vous l'arrivé pour l'embarquement du client ?", () async {
                   Navigator.pop(context);
-                  setState(() {
-                    currentEtape.action=1;
-                  });
+                  EasyLoading.show(status: 'Veuillez patienter...');
+                  try{
+                    var date = Constante.getDateForAPI(DateTime.now());
+                    var hour= DateTime.now().hour;
+                    var minute= DateTime.now().minute;
+                    await runActivityEvent(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, activeActivitiesObject.activityNo,
+                        {
+                      "arrivalTime": "$hour$minute",
+                      "confirmArrival": true,
+                      "date": "$date"
+                        }
+                    ).then((value){
+                      EasyLoading.dismiss();
+                      if(value.statusCode == 200){
+                        setState(() {
+                          currentEtape.action=1;
+                        });
+                      }else{
+                        // print(value.body.toString());
+                        //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActivitiesStepper(widget.listActivities.toList(), widget.idTourne)));
+                        Toast?.show("Erreur de connexion au serveur veuillez réessayer.",
+                          duration: Toast.lengthLong,
+                          gravity: Toast.bottom,
+                          backgroundColor: Colors.red.shade400,
+                          textStyle:TextStyle(color: Colors.white),
+                        );
+                      }
+                    });
+                  }
+                  catch (e) {
+                    print("erreur : "+e.toString());
+                    EasyLoading.dismiss();
+                    Toast?.show("Erreur de connexion au serveur veuillez réessayer.",
+                      duration: Toast.lengthLong,
+                      gravity: Toast.bottom,
+                      backgroundColor: Colors.black,
+                      textStyle:TextStyle(color: Colors.white),
+                    );
+                  }
                 });
               }
               if(currentEtape.action==1){
@@ -605,28 +651,70 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
                 );
               }
         }
-
     );
-
   }
 
   Widget debarquementCardBuild() {
     return     buildCard( currentEtape.action==1 ?
     setImage("assets/client_out.jpeg", 30, 30) :
-    setIcon(Icons.directions_car, Colors.green.shade400),
-        currentEtape.action==1 ? "Débarquer \n le client" : "Prêt pour \n le débarquement",
+    setIcon(Icons.directions_car, Colors.red.shade400),
+        currentEtape.action==1 ? "Débarquement \n éffectué" : "Arrivé  \n  débarquement",
             (){
       if(currentEtape.action==0){
-        print(currentEtape.action);
-        setState(() {
-          currentEtape.action=1;
+        Constante.alertPopup(context, "Confirmez-vous l'arrivé pour le débarquement du client ?", () async {
+          Navigator.pop(context);
+          EasyLoading.show(status: 'Veuillez patienter...');
+          try{
+            var date = Constante.getDateForAPI(DateTime.now());
+            var hour= DateTime.now().hour;
+            var minute= DateTime.now().minute;
+            await runActivityEvent(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, activeActivitiesObject.activityNo,
+                {
+                  "arrivalTime": "$hour$minute",
+                  "date": "$date"
+                }
+            ).then((value){
+              EasyLoading.dismiss();
+              if(value.statusCode == 200){
+                setState(() {
+                  currentEtape.action=1;
+                });
+              }else{
+                // print(value.body.toString());
+                //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActivitiesStepper(widget.listActivities.toList(), widget.idTourne)));
+                Toast?.show("Erreur de connexion au serveur veuillez réessayer.",
+                  duration: Toast.lengthLong,
+                  gravity: Toast.bottom,
+                  backgroundColor: Colors.red.shade400,
+                  textStyle:TextStyle(color: Colors.white),
+                );
+              }
+            });
+          }
+          catch (e) {
+            print("erreur : "+e.toString());
+            EasyLoading.dismiss();
+            Toast?.show("Erreur de connexion au serveur veuillez réessayer.",
+              duration: Toast.lengthLong,
+              gravity: Toast.bottom,
+              backgroundColor: Colors.black,
+              textStyle:TextStyle(color: Colors.white),
+            );
+          }
         });
+
       }else if(currentEtape.action==1){
         Constante.alertPopup(context, "Confirmez-vous le débarquement du client ?", () async {
           Navigator.pop(context);
           EasyLoading.show(status: 'Veuillez patienter...');
           try{
-            await runActivityEvent(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, activeActivitiesObject.activityNo,"").then((value){
+            var date = Constante.getDateForAPI(DateTime.now());
+            var hour= DateTime.now().hour;
+            var minute= DateTime.now().minute;
+            await runActivityEvent(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, activeActivitiesObject.activityNo,      {
+              "departureTime": "$hour$minute",
+              "date": "$date"
+            }).then((value){
               EasyLoading.dismiss();
               print(value.statusCode.toString());
               print(value.toString());
@@ -771,7 +859,23 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
             Navigator.pop(context);
             EasyLoading.show(status: 'Veuillez patienter...');
             try{
-              await runActivityEvent(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, activeActivitiesObject.activityNo, paymentValue).then((value){
+              var date = Constante.getDateForAPI(DateTime.now());
+              var hour= DateTime.now().hour;
+              var minute= DateTime.now().minute;
+              var cardNumber= activeActivitiesObject.tripInfo.passengers[0].cardNumber;
+              await runActivityEvent(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier, activeActivitiesObject.activityNo,
+                  {
+                "departureTime": "$hour$minute",
+                "date": "$date",
+                "passengers": [
+                  {
+                    "passengerType": activeActivitiesObject.tripInfo.passengers[0].passengerType,
+                    "paymentMode": "$paymentValue",
+                    "cardNumber": "$cardNumber"
+                  }
+                ],
+               }
+              ).then((value){
                 EasyLoading.dismiss();
                 print(value.statusCode.toString());
                 print(value.toString());
@@ -780,7 +884,7 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
                     // get debarquement adress
                     // Activities act= widget.listActivities.firstWhere((p) => p.tripInfo.tripIdentifier == activeActivitiesObject.tripInfo.tripIdentifier  && p.activityType==4);
                     if(listClient.length>0){
-                      var customer= listClient.firstWhere((p) => p.idActivities == activeActivitiesObject.activityNo);
+                      Customer? customer= listClient.firstWhereOrNull((p) => p.idActivities == activeActivitiesObject.activityNo);
                       if(customer!=null){
                         var index= listClient.indexWhere((p) => p.idActivities == activeActivitiesObject.activityNo);
                         customer.paymentMode= paymentValue;
@@ -829,7 +933,7 @@ class _ActivitiesStepper extends State<ActivitiesStepper> {
               });
             }
             catch (e) {
-              print("erreur : $e");
+              print("erreur : "+e.toString());
               EasyLoading.dismiss();
               Toast?.show("Erreur de connexion au serveur veuillez réessayer.",
                 duration: Toast.lengthLong,

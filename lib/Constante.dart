@@ -18,19 +18,24 @@ import 'model/dto/tourne.dart';
    static const policy= "B2C_1_ApiTransportLogin";
    // fin coordonnée de connexion b2c
    static const String token = '';
-  static String serveurAdress= "https://apitransport-preprod.exo.quebec/api/transporteur/v1/";
+   static String serveurAdress= "https://apitransport-preprod.exo.quebec/api/transporteur/v1/";
+   static const String apiKey = 'AIzaSyC4xQ0n-BwL_gODzdOTI6eqmzABT7XtF9Y';
 
-  static const int numeroVehicule = 6;
-
+   static String numeroVehicule = "";
    static  List<Tourne> listTourne = [];
+   static  const String key_numero_vehicule = "numero_vehicule";
+   static  const String key_token = "token";
 
-  static void gpsPermission() async {
+
+  static Future<void> gpsPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
 
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+     // await Geolocator.openAppSettings();
+     // await Geolocator.openLocationSettings();
       return Future.error('Location services are disabled.');
     }
 
@@ -38,13 +43,16 @@ import 'model/dto/tourne.dart';
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+      //  await Geolocator.openAppSettings();
+      //  await Geolocator.openLocationSettings();
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      //await Geolocator.openAppSettings();
+     // await Geolocator.openLocationSettings();
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
   }
 
@@ -267,5 +275,11 @@ import 'model/dto/tourne.dart';
      return true;
    }
 
+
+   static String getDateForAPI(DateTime dateTime) {
+     String date = dateTime.toString();
+     date = date.replaceAll(RegExp(' +'), 'T')+"Z";
+     return date;
+   }
 
  }

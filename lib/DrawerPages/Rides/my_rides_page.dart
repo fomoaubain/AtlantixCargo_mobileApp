@@ -63,12 +63,7 @@ class _MyRidesPage extends  State<MyRidesPage>  {
     print("nombre from API : "+listModel.length.toString());
     print("token : "+token);
     initListRoutes=  listModel;
-    Constante.listTourne= initListTourne();
-
-    //getListTournefromBd();
-
-
-    return listModel.take(8).toList();
+    return listModel.take(20).toList();
   }
 
   List<Tourne> initListTourne(){
@@ -80,39 +75,19 @@ class _MyRidesPage extends  State<MyRidesPage>  {
     return listTourne;
   }
 
-  void getListTournefromBd() async {
-    final List<Tourne> listTourne = [];
-    initListRoutes.forEach((element) async {
-      Tourne tourne = new Tourne(idTourne: element.runKey.runIdentifier, status: 0, date_jour: DateTime.now().toString());
-      Tourne? result  = await _sqliteService.getItems(element.runKey.runIdentifier);
+  Future<Tourne> getTournefromBd( var idTourne) async {
+      Tourne? result  = await _sqliteService.getItems(idTourne);
       if(result!=null) {
-        listTourne.add(result);
+        print("not null");
+      return result;
       }else{
+        Tourne tourne = new Tourne(idTourne: idTourne, status: 0, date_jour: DateTime.now().toString());
         await _sqliteService.createItem(tourne);
-        listTourne.add(tourne);
+        print(" null");
+        return tourne;
       }
-    });
-    setState(() {
-      Constante.listTourne= listTourne;
-    });
-    print("listTourne form bd : "+listTourne.length.toString());
   }
-
-
-  void getListTournefromBd2( Routes a) async {
-    Tourne tourne = new Tourne(idTourne: a.runKey.runIdentifier, status: 0, date_jour: DateTime.now().toString());
-    Tourne? result  = await _sqliteService.getItems(a.runKey.runIdentifier);
-    if(result!=null) {
-      print("not null");
-    }else{
-      await _sqliteService.createItem(tourne);
-      print(" null");
-    }
-
-  }
-
-
-
+  
 
  /*Future<List<Routes>> fetchItem() async {
     final prefs = await SharedPreferences.getInstance();
@@ -129,7 +104,6 @@ class _MyRidesPage extends  State<MyRidesPage>  {
     print("nombre : "+listModel.length.toString());
     print("token : "+token);
     initListRoutes=  listModel;
-    getExistingSharePreferenceData();
     return listModel.take(8).toList();
   }*/
 
@@ -222,7 +196,7 @@ class _MyRidesPage extends  State<MyRidesPage>  {
   Future _fetchData() async {
     await new Future.delayed(new Duration(seconds: 2));
     setState(() {
-      objRoutes = initListRoutes.take(objRoutes.length+8).toList();
+      objRoutes = initListRoutes.take(objRoutes.length+20).toList();
       loading = false;
     });
   }
@@ -287,7 +261,20 @@ class _MyRidesPage extends  State<MyRidesPage>  {
                       );
                     }
                     Routes nDataList = objRoutes[i];
-                    return buildItem(context, nDataList);
+                    return FutureBuilder<Tourne>(
+                      future: getTournefromBd(nDataList.runKey.runIdentifier),
+                        builder: (context, userSnapshot) {
+                          if(userSnapshot.connectionState != ConnectionState.done) {
+                            return Constante.ShimmerSimpleVertical(10);
+                          }
+                          if(userSnapshot.hasData) {
+                            return buildItem(context, nDataList, userSnapshot.data!);
+                          }
+                          return Constante.ShimmerSimpleVertical(10);
+                        }
+                    );
+
+                      //return buildItem(context, nDataList);
                   }
               );
             }
@@ -306,28 +293,28 @@ class _MyRidesPage extends  State<MyRidesPage>  {
     );
   }
 
-  Widget buildItem( BuildContext context, Routes item){
+  Widget buildItem( BuildContext context, Routes item, Tourne  tourne){
     var theme = Theme.of(context);
 
     int nombreActivite = item.activities.length;
     String heureDepart= item.activities[0].departureTime.toString().substring(0,2)+"h"+item.activities[0].departureTime.toString().substring(2,4);
     String heureFin= item.activities[nombreActivite-1].arrivalTime.toString().substring(0,2)+"h"+item.activities[nombreActivite-1].arrivalTime.toString().substring(2,4);
-    print(Constante.listTourne.length);
-    print("nombre de tournée  : " + Constante.listTourne.length.toString());
-    getListTournefromBd2(item);
-    Tourne tourne= Constante.listTourne.firstWhere((p) => p.idTourne == item.runKey.runIdentifier);
+
+   // print("nombre de tournée  : " + Constante.listTourne.length.toString());
+    //getListTournefromBd2(item);
+   // Tourne tourne= Constante.listTourne.firstWhere((p) => p.idTourne == item.runKey.runIdentifier);
 
     Color badgecolor =  Colors.green.shade400;
     String badgeTitle ="A venir";
-    if(tourne !=null){
+   if(tourne !=null){
        badgecolor = tourne.status==0 ? Colors.green.shade400 : tourne.status ==1 ? Colors.orange.shade400 : Colors.red.shade400;
        badgeTitle = tourne.status==0 ? "A venir" : tourne.status ==1 ? "En cour..." : "Terminé";
     }
 
     return GestureDetector(
-      onTap: (){
+      onTap: () async {
         //   Navigator.pushNamed(context, PageRoutes.stepperPage),
-        if( tourne.status==2){
+       if( tourne.status==2){
           Toast?.show("Cette tournée est terminé",
             duration: Toast.lengthLong,
             gravity: Toast.bottom,
@@ -335,8 +322,17 @@ class _MyRidesPage extends  State<MyRidesPage>  {
             textStyle:TextStyle(color: Colors.white),
           );
         }else{
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyActivitiesPage( item.activities, item.runKey.runIdentifier, item.runKey)));
-      }
+        // var result= await Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyActivitiesPage( item.activities, item.runKey.runIdentifier, item.runKey)));
+
+         var result = await Navigator.push(context, MaterialPageRoute(
+             builder: (context){
+               return MyActivitiesPage( item.activities, item.runKey.runIdentifier, item.runKey);
+             }
+         ));
+         setState(() {
+           listRoutes= this.fetchItem();
+         });
+       }
         // Navigator.pushNamed(context, PageRoutes.rideInfoPage),
       },
       child: Column(

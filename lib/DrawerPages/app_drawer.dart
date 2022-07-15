@@ -48,7 +48,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   Future closeSession() async {
     var urlApi= Constante.serveurAdress+"vehicule/closeVehicleSession";
-    var vehicleIdentifier=5;
+    var vehicleIdentifier= Constante.numeroVehicule;
     Map jsonBody = {'vehicleIdentifier': "$vehicleIdentifier" };
     String body = json.encode(jsonBody);
     http.Response response = await http.post(
@@ -107,11 +107,10 @@ class _AppDrawerState extends State<AppDrawer> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Véhicule 6',
-                                    style: theme.textTheme.headline6),
+                                Text("Véhicule "+ Constante.numeroVehicule,
+                                    style: theme.textTheme.headline5),
                                 SizedBox(height: 6),
-                                Text('+1 (866) 813-1234',
-                                    style: theme.textTheme.caption),
+
                                 SizedBox(height: 4),
                               ],
                             )
@@ -149,10 +148,10 @@ class _AppDrawerState extends State<AppDrawer> {
                     context.getString(Strings.MY_RIDES)!, () {
                       Navigator.popAndPushNamed(context, PageRoutes.myRidesPage);
                     }),
-                buildListTile(context, Icons.list,
+                /*buildListTile(context, Icons.list,
                     "Historique des transports", () {
                       Navigator.popAndPushNamed(context, PageRoutes.historiquePage);
-                    }),
+                    }),*/
               /*  buildListTile(
                     context, Icons.star, context.getString(Strings.MY_RATINGS)!,
                         () {
@@ -173,7 +172,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       else
                         Navigator.pushReplacementNamed(
                             context, PageRoutes.promoCode);
-                    }),*/
+                    }),
                 buildListTile(context, Icons.settings,
                     context.getString(Strings.SETTINGS)!, () {
                       if (widget.fromHome)
@@ -181,7 +180,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       else
                         Navigator.pushReplacementNamed(
                             context, PageRoutes.settingsPage);
-                    }),
+                    }),*/
                 buildListTile(
                     context, Icons.mail, context.getString(Strings.CONTACT_US)!,
                         () {
@@ -194,8 +193,12 @@ class _AppDrawerState extends State<AppDrawer> {
                     }),
                  buildListTile(
                     context, Icons.lock_open_rounded, "Se deconnecter", () {
-                   EasyLoading.show( status: "Deconnexion en cours...", dismissOnTap: false);
-                   closeSession();
+                      Constante.alertPopup(context, "Voulez-vous vraiment vous déconnecter ?",
+                      () {
+                        EasyLoading.show( status: "Deconnexion en cours...", dismissOnTap: false);
+                        closeSession();
+                      });
+
                  }),
               ],
             ),

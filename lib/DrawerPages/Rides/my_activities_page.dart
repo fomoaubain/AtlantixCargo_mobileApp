@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:qcabs_driver/BookRide/activities_stepper.dart';
 import 'package:qcabs_driver/Locale/strings_enum.dart';
@@ -15,6 +17,7 @@ import 'package:qcabs_driver/Routes/page_routes.dart';
 import 'package:qcabs_driver/Locale/locale.dart';
 import 'package:qcabs_driver/model/Routes.dart';
 import 'package:qcabs_driver/model/dto/tourne.dart';
+import 'package:qcabs_driver/service/service_db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import '../../Assets/assets.dart';
@@ -40,13 +43,14 @@ class MyActivitiesPage extends StatefulWidget {
 }
 
 class _MyActivitiesPage extends  State<MyActivitiesPage>  {
-
+  late SqliteService _sqliteService;
   Future<void>? _launched;
   ScrollController _scrollController = new ScrollController();
   late List<Activities> objActivities=[],  initListActivities=[];
   late Future<List<Activities>>  listFutureActivities;
   var loading = false;
   var token ;
+  late Position position;
 
 
 
@@ -54,6 +58,8 @@ class _MyActivitiesPage extends  State<MyActivitiesPage>  {
   void initState() {
     super.initState();
     loading = true;
+    this._sqliteService= SqliteService();
+    this._sqliteService.initializeDB();
     listFutureActivities=fetchItem();
   }
 
@@ -65,18 +71,25 @@ class _MyActivitiesPage extends  State<MyActivitiesPage>  {
 
   Future beginRide(var runId, var scheduleId, ) async{
     final prefs = await SharedPreferences.getInstance();
+    var date = Constante.getDateForAPI(DateTime.now());
+    var hour= DateTime.now().hour;
+    var minute= DateTime.now().minute;
     token = prefs.getString('token');
 
-    print("token : " + token);
-    print("runId : " + runId);
-    print("scheduleId : " + scheduleId);
+
+    print("time : $hour$minute");
 
     var urlApi= Constante.serveurAdress+"vehicule/assignmentEvent/schedule/$scheduleId/run/$runId";
     Map jsonBody = {
       "starting": true,
-      "time": "10",
-      "odometer": 0,
-      "date": "2022-06-30T15:22:49.201Z"
+      "time": "$hour$minute",
+      "date": "$date",
+      'gpsPosition':{
+        "longitude": position!=null ?position.longitude : 0,
+        "latitude":position!=null ? position.latitude : 0,
+        "time": position!=null ? DateFormat.Hm().format(position.timestamp!) :"",
+        "speed": position!=null ? position.speed :0
+      }
     };
     String body = json.encode(jsonBody);
     http.Response response = await http.post(
@@ -101,7 +114,14 @@ class _MyActivitiesPage extends  State<MyActivitiesPage>  {
     var theme = Theme.of(context);
     ToastContext().init(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.pop(context,true);
+            }
+        ),
+      ),
       body: FadedSlideAnimation(
         ListView(
           physics: BouncingScrollPhysics(),
@@ -162,16 +182,16 @@ class _MyActivitiesPage extends  State<MyActivitiesPage>  {
             Constante.alertPopup(context, "Confirmez le début de la tournée ?", () async {
               Navigator.pop(context);
               EasyLoading.show(status: 'Veuillez patienter...');
+              position=(await Constante.determinePosition())!;
               try{
-                await beginRide(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier).then((value){
+                await beginRide(widget.runkey.runIdentifier, widget.runkey.scheduleIdentifier).then((value) async {
                   EasyLoading.dismiss();
                   print(value.statusCode.toString());
                   print(value.toString());
                   if(value.statusCode == 200){
-                    Tourne tourne= Constante.listTourne.firstWhere((p) => p.idTourne == widget.idTourne);
-                    var index= Constante.listTourne.indexWhere((p) => p.idTourne == widget.idTourne);
-                    tourne.status = 1;
-                    Constante.listTourne[index]= tourne;
+                   await  _sqliteService.updateItems(widget.idTourne, 1).then((value){
+                     print("update :" + value.toString());
+                   });
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActivitiesStepper(widget.listActivities.toList(), widget.idTourne, widget.runkey)));
                   }else{
                     // print(value.body.toString());
